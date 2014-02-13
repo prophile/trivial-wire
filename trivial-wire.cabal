@@ -15,7 +15,7 @@ cabal-version:       >=1.8
 
 library
   build-depends:       base == 4.*, arrows >= 0.4
-  exposed-modules:     Control.FRP.Wire
+  exposed-modules:     Control.FRP.Wire, Control.FRP.Wire.Utils
   GHC-options:         -Wall -Werror
 
 test-suite tests
