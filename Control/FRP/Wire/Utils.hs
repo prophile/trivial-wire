@@ -1,7 +1,8 @@
 {-# LANGUAGE Arrows #-}
 
 module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
-                              accumulate, wsum, wproduct) where
+                              accumulate, wsum, wproduct,
+                              differentiate) where
 
 import Control.FRP.Wire
 import Data.Monoid
@@ -32,4 +33,8 @@ wsum = Sum ^>> accumulate >>^ getSum
 
 wproduct :: (ArrowCircuit a, Num n) => a n n
 wproduct = Product ^>> accumulate >>^ getProduct
+
+differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
+differentiate z c = proc x -> do lastValue <- delay z -< x
+                                 returnA -< c x lastValue
 

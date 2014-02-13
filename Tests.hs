@@ -27,3 +27,8 @@ main = hspec $ do
     it "can form a circuit" $ property $
       \x y z -> viewWire (delay 0) [x, y, z] == [0 :: Int, x, y]
 
+  describe "the utilities" $ do
+    it "can differentiate streams of integers" $ property $ do
+      \x y -> viewWire (differentiate 0 (-)) [x, y] ==
+              [x :: Integer, y - x]
+
