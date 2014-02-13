@@ -7,7 +7,7 @@ import Prelude hiding ((.), id)
 
 import Control.Category
 import Control.Arrow
-import Control.Arrow.Operations
+import Control.Arrow.Class.Rutten
 
 import Control.Applicative
 import Data.Monoid
@@ -56,7 +56,7 @@ instance ArrowLoop Wire where
   loop (Wire f) = Wire g
     where g x = let ((out, common), f') = f (x, common) in (out, loop f')
 
-instance ArrowCircuit Wire where
+instance ArrowRutten Wire where
   delay x = Wire (\y -> (x, delay y))
 
 instance Functor (Wire a) where

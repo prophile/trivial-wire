@@ -12,7 +12,7 @@ import Control.FRP.Wire.Utils
 import Control.Category
 import Control.Arrow
 import Control.Applicative
-import Control.Arrow.Operations(delay)
+import Control.Arrow.Class.Rutten(delay)
 
 main :: IO ()
 main = hspec $ do
