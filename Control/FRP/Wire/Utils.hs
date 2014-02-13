@@ -1,5 +1,3 @@
-{-# LANGUAGE Arrows #-}
-
 module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
                               accumulate, wsum, wproduct,
                               differentiate) where
