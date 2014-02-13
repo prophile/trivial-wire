@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main(main) where
 
 import Prelude hiding ((.), id)
@@ -34,4 +36,8 @@ main = hspec $ do
     it "can integrate streams of integers" $ property $ do
       \x y z -> viewWire wsum [x, y, z] ==
               [x :: Integer, x + y, x + y + z]
+
+  describe "the convenience instances" $ do
+    it "can handle strings" $ do
+      viewWire "badgers" [undefined] `shouldBe` ["badgers"]
 

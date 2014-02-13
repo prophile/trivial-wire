@@ -13,6 +13,8 @@ import Control.Arrow.Transformer.Automaton
 import Control.Applicative
 import Data.Monoid
 
+import Data.String
+
 -- |Basic FRP wire type. It's actually, in essence, a simple arrow automaton:
 -- isomorphic to Automaton (->) a b. That is, it is roughly correspondant to:
 --
@@ -67,6 +69,9 @@ instance (Floating b) => Floating (Wire a b) where
 instance (Bounded b) => Bounded (Wire a b) where
   minBound = pure minBound
   maxBound = pure maxBound
+
+instance (IsString b) => IsString (Wire a b) where
+  fromString = pure . fromString
 
 -- |Run a single step of a wire with inputs, getting both the current outputs
 -- and the next iteration of the wire to run.
