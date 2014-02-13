@@ -12,6 +12,7 @@ import Control.FRP.Wire.Utils
 import Control.Category
 import Control.Arrow
 import Control.Applicative
+import Control.Arrow.Operations(delay)
 
 main :: IO ()
 main = hspec $ do
@@ -23,4 +24,6 @@ main = hspec $ do
     it "obeys arr" $ property $
       \x f -> viewWire (arr (apply f)) (x :: [String]) ==
               (map (apply f) x :: [Int])
+    it "can form a circuit" $ property $
+      \x y z -> viewWire (delay 0) [x, y, z] == [0 :: Int, x, y]
 
