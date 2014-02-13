@@ -24,9 +24,9 @@ runWireTerminal :: Wire String String -> IO ()
 runWireTerminal w = runWire w getLine putStrLn
 
 accumulate :: (ArrowCircuit a, Monoid m) => a m m
-accumulate = proc x -> do rec prevTotal <- delay mempty -< newTotal
-                              let newTotal = prevTotal `mappend` x
-                          returnA -< newTotal
+accumulate = loop $ second (delay mempty) >>^ process
+  where process (x, prevTotal) = let newTotal = prevTotal `mappend` x
+                                   in (newTotal, newTotal)
 
 wsum :: (ArrowCircuit a, Num n) => a n n
 wsum = Sum ^>> accumulate >>^ getSum
