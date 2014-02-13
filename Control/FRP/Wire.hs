@@ -7,13 +7,13 @@ import Prelude hiding ((.), id)
 
 import Control.Category
 import Control.Arrow
-import Control.Arrow.Operations
-import Control.Arrow.Transformer.Automaton
+import Control.Arrow.Operations(ArrowCircuit)
+import Control.Arrow.Transformer.Automaton(Automaton(Automaton))
 
-import Control.Applicative
-import Data.Monoid
+import Control.Applicative(Applicative, pure, liftA2)
+import Data.Monoid(Monoid, mempty, mappend)
 
-import Data.String
+import Data.String(IsString, fromString)
 
 -- |Basic FRP wire type. It's actually, in essence, a simple arrow automaton:
 -- isomorphic to Automaton (->) a b. That is, it is roughly correspondant to:
