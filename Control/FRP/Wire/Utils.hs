@@ -1,5 +1,6 @@
 module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
                               accumulate, wsum, wproduct,
+                              wdecisive, wlatch,
                               differentiate) where
 
 import Prelude hiding ((.), id)
@@ -34,6 +35,12 @@ wsum = Sum ^>> accumulate >>^ getSum
 
 wproduct :: (ArrowCircuit a, Num n) => a n n
 wproduct = Product ^>> accumulate >>^ getProduct
+
+wdecisive :: (ArrowCircuit a) => a (Maybe b) (Maybe b)
+wdecisive = First ^>> accumulate >>^ getFirst
+
+wlatch :: (ArrowCircuit a) => a (Maybe b) (Maybe b)
+wlatch = Last ^>> accumulate >>^ getLast
 
 differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
 differentiate z c = (id &&& delay z) >>> arr (uncurry c)
