@@ -4,6 +4,9 @@ module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
                               accumulate, wsum, wproduct,
                               differentiate) where
 
+import Prelude hiding ((.), id)
+import Control.Category
+
 import Control.FRP.Wire
 import Data.Monoid
 import Control.Arrow
@@ -35,6 +38,5 @@ wproduct :: (ArrowCircuit a, Num n) => a n n
 wproduct = Product ^>> accumulate >>^ getProduct
 
 differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
-differentiate z c = proc x -> do lastValue <- delay z -< x
-                                 returnA -< c x lastValue
+differentiate z c = (id &&& delay z) >>> arr (uncurry c)
 
