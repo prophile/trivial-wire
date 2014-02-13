@@ -1,0 +1,17 @@
+name:                trivial-wire
+version:             0.1.0.0
+synopsis:            Trivial FRP wires
+description:
+  This is some trivial automaton wire magic.
+homepage:            https://github.com/prophile/trivial-wire
+license:             MIT
+license-file:        LICENSE
+author:              Alistair Lynn
+maintainer:          arplynn+twire@gmail.com
+copyright:           © Alistair Lynn, 2014
+category:            Control
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+  build-depends:       base == 4.*
