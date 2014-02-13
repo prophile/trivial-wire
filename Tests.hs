@@ -29,6 +29,9 @@ main = hspec $ do
 
   describe "the utilities" $ do
     it "can differentiate streams of integers" $ property $ do
-      \x y -> viewWire (differentiate 0 (-)) [x, y] ==
-              [x :: Integer, y - x]
+      \x y z -> viewWire (differentiate 0 (-)) [x, y, z] ==
+              [x :: Integer, y - x, z - y]
+    it "can integrate streams of integers" $ property $ do
+      \x y z -> viewWire wsum [x, y, z] ==
+              [x :: Integer, x + y, x + y + z]
 
