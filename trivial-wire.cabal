@@ -21,4 +21,4 @@ library
 test-suite tests
   type:              exitcode-stdio-1.0
   main-is:           Tests.hs
-  build-depends:     base == 4.*, arrows >= 0.4
+  build-depends:     base == 4.*, arrows >= 0.4, hspec >= 1.5, QuickCheck >= 2.6
