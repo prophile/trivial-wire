@@ -2,7 +2,7 @@
 module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
                               accumulate, wsum, wproduct,
                               wdecisive, wlatch,
-                              differentiate,
+                              differentiate, derivative,
                               changes) where
 
 import Prelude hiding ((.), id)
@@ -61,6 +61,12 @@ wlatch = Last ^>> accumulate >>^ getLast
 -- as the arguments, which yields 1 - z^-1.
 differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
 differentiate z c = (id &&& delay z) >>> arr (uncurry c)
+
+-- |Numerical differentiation.
+--
+-- prop> derivative = differentiate 0 (-)
+derivative :: (ArrowCircuit a, Num b) => a b b
+derivative = differentiate 0 (-)
 
 -- |Yields only values which have changed from the previous definition.
 --
