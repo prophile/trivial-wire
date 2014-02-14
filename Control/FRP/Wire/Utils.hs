@@ -63,8 +63,8 @@ differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
 differentiate z c = (id &&& delay z) >>> arr (uncurry c)
 
 -- |Yields only values which have changed from the previous definition.
--- |
--- | prop> wlatch . changes = id
+--
+-- prop> wlatch . changes = id
 changes :: (ArrowCircuit a, Eq b) => a b (Maybe b)
 changes = arr Just >>> loop looped
   where looped = arr (\(x, px) -> ((px, x), x)) >>>
