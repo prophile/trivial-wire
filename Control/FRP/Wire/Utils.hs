@@ -2,7 +2,8 @@
 module Control.FRP.Wire.Utils(viewWire, runWire, runWireTerminal,
                               accumulate, wsum, wproduct,
                               wdecisive, wlatch,
-                              differentiate) where
+                              differentiate,
+                              changes) where
 
 import Prelude hiding ((.), id)
 import Control.Category
@@ -60,4 +61,13 @@ wlatch = Last ^>> accumulate >>^ getLast
 -- as the arguments, which yields 1 - z^-1.
 differentiate :: (ArrowCircuit a) => b -> (b -> b -> c) -> a b c
 differentiate z c = (id &&& delay z) >>> arr (uncurry c)
+
+-- |Yields only values which have changed from the previous definition.
+-- |
+-- | prop> wlatch . changes = id
+changes :: (ArrowCircuit a, Eq b) => a b (Maybe b)
+changes = arr Just >>> loop looped
+  where looped = arr (\(x, px) -> ((px, x), x)) >>>
+                 second (delay Nothing) >>>
+                 arr (\((px, x), px') -> (if px /= x then x else Nothing, px'))
 

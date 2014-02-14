@@ -36,6 +36,8 @@ main = hspec $ do
     it "can integrate streams of integers" $ property $ do
       \x y z -> viewWire wsum [x, y, z] ==
               [x :: Integer, x + y, x + y + z]
+    it "can detect and latch changes" $ property $ do
+      \x -> viewWire (changes >>> wlatch) x `shouldBe` map Just (x :: [Int])
 
   describe "the convenience instances" $ do
     it "can handle strings" $ do
