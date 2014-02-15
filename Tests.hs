@@ -36,6 +36,14 @@ main = hspec $ do
     it "can integrate streams of integers" $ property $ do
       \x y z -> viewWire wsum [x, y, z] ==
               [x :: Integer, x + y, x + y + z]
+
+  describe "signal combinators" $ do
+    it "can latch signals" $ property $ do
+      \x y -> viewWire wlatch [Nothing, Just x, Nothing, Just y] `shouldBe`
+                              [Nothing, Just (x :: Int), Just x, Just y]
+    it "can wait for initials from signals" $ property $ do
+      \x y -> viewWire wdecisive [Nothing, Just x, Nothing, Just y] `shouldBe`
+                                 [Nothing, Just (x :: Int), Just x, Just x]
     it "can detect and latch changes" $ property $ do
       \x -> viewWire (changes >>> wlatch) x `shouldBe` map Just (x :: [Int])
 
