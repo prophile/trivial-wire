@@ -15,6 +15,7 @@ import Control.Category
 import Control.Arrow
 import Control.Applicative
 import Control.Arrow.Operations(delay)
+import Control.Arrow.Signal
 
 main :: IO ()
 main = hspec $ do
@@ -50,4 +51,9 @@ main = hspec $ do
   describe "the convenience instances" $ do
     it "can handle strings" $ do
       viewWire "badgers" [undefined] `shouldBe` ["badgers"]
+
+  describe "liftSignal" $ do
+    it "acts only on events" $ property $ do
+      \x -> viewWire (liftSignal $ arr (* (2 :: Int)) >>> arr Just) x `shouldBe`
+            map (fmap (* 2)) x
 
