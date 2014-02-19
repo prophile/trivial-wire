@@ -28,13 +28,13 @@ type Wire a b = ImproveArrow BaseWire a b
 -- and the next iteration of the wire to run.
 stepBaseWire :: BaseWire a b -> a -> (b, BaseWire a b)
 stepBaseWire (BaseWire (Automaton f)) x = (res, BaseWire wire')
-  where (res, wire') = f x
+  where ~(res, wire') = f x
 {-# INLINE stepBaseWire #-}
 
 -- |Run a single step of a wire with inputs, getting both the current outputs
 -- and the next iteration of the wire to run.
 stepWire :: Wire a b -> a -> (b, Wire a b)
 stepWire w input = (res, lift wire')
-  where (res, wire') = stepBaseWire (lowerImprove w) input
+  where ~(res, wire') = stepBaseWire (lowerImprove w) input
 {-# INLINE stepWire #-}
 
