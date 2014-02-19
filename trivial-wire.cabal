@@ -20,7 +20,8 @@ library
     arrow-improve == 0.1.0.0
   exposed-modules:
     Control.FRP.Wire,
-    Control.FRP.Wire.Utils
+    Control.FRP.Wire.Utils,
+    Control.FRP.Signal
   GHC-options:         -Wall -Werror
 
 test-suite tests
